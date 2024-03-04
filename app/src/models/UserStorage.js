@@ -18,6 +18,7 @@ class UserStorage {
         
         return  newUsers;
     }
+
     static getUserInfo(id){
         const users = this.#users;
         const idx =users.id.indexOf(id);//getUserInfo(id)에서 받아온 id 값으로 users의 id랑 같은 index값을 가져옴
@@ -29,6 +30,14 @@ class UserStorage {
 
         return userInfo;
     };
+
+    static save(userInfo){
+        const users = this.#users;
+        users.id.push(userInfo.id);
+        users.name.push(userInfo.name);
+        users.password.push(userInfo.password);
+        return {success: true};
+    }
 }
 
 module.exports = UserStorage;
