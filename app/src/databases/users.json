@@ -1,0 +1,5 @@
+{
+    "id" : [ "test1", "test2", "test3"],
+    "password" : [ "test1!", "test2!", "test3!"],
+    "name" : ["위재민", "위재우" , "하이용"]
+}
