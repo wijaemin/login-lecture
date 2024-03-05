@@ -9,29 +9,33 @@ class User {
 
     async login(){
         const client =this.body;
-        const {id , password} = await UserStorage.getUserInfo(client.id);
-        if(id){
+
+        try{
+            const user = await UserStorage.getUserInfo(client.id);
+            if(user){
+                
+                if(user.id === client.id && user.password === client.password){
+                    return  {success: true};
+                }
+                    return {success : false, msg: "비밀번호 일치 X"};
+                
+            };
             
-            if(id === client.id && password === client.password){
-                return  {success: true};
-            }
-                return {success : false, msg: "비밀번호 일치 X"};
-            
-        };
-        
-        return {success : false, msg: "존재하지 않는 아이디"};
+            return {success:false, msg:"존재하지 않는 아이디"};
+        }catch(err){
+            return {success:false, msg:err};
+        }
 
     };
     async register(){
         const client = this.body;
         try{
             const response = await UserStorage.save(client);
-            console.log("response=" + response);
             return response;
         }
         catch(err){
             
-            return { success: false, msg: err };
+            return {success:false, msg:err};
 
         }
     }

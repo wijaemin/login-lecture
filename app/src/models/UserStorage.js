@@ -4,14 +4,11 @@ const db = require("../config/db");
 
 class UserStorage {
 
-    static getUsers(isAll, ...fields) {
-
-    }
-
     static getUserInfo(id){
        return new Promise((resolve,reject)=>{
-            db.query("select * from users where id = ?",[id],(err,data)=>{
-                if(err) reject(err);
+            const query = "select * from users where id = ?;";
+            db.query(query,[id],(err,data)=>{
+                if(err) reject(`${err}`);
                 resolve(data[0]);
             });
         });
@@ -20,6 +17,17 @@ class UserStorage {
 
 
     static async save(userInfo){
+        return new Promise((resolve,reject)=>{
+            const query = "insert into users(id, name, password) values(?, ?, ?);";
+            db.query(
+                query, 
+                [userInfo.id, userInfo.name, userInfo.password], 
+                (err)=>{
+                if(err) reject(`${err}`);
+                 
+                resolve({success: true});
+            });
+        });
 
     }
 }
