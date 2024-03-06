@@ -33,6 +33,9 @@ function register(){
             location.href ="/login";
         }
         else{
+            if(res.err){
+                return alert(res.err);
+            }
             alert(res.msg);
         }
     })
